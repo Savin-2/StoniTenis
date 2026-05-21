@@ -80,12 +80,13 @@ public class PrikazSportistaController {
             public void actionPerformed(ActionEvent e) {
 
                 int red = psf.getjTableSportisti().getSelectedRow();
-                if (red == -1) {
+                if (red == -1) {     
                     JOptionPane.showMessageDialog(psf, "Morate odabrati sportistu!", "Greška", JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     ModelTabeleSportista mts = (ModelTabeleSportista) psf.getjTableSportisti().getModel();
                     Sportista s = mts.getLista().get(red);
+                    JOptionPane.showMessageDialog(psf, "Sistem je našao sportistu", "USPEH", JOptionPane.INFORMATION_MESSAGE);
                     Koordinator.getInstance().otvoriIzmeniSportistuFormu(s);
 
                 }

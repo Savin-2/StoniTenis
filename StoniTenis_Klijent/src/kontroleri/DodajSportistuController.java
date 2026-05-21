@@ -76,14 +76,17 @@ public class DodajSportistuController {
 
                 if (ime.isEmpty()) {
                     JOptionPane.showMessageDialog(dsf, "Ime ne sme biti prazno!", "GREŠKA", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(dsf, "Sistem ne može da zapamti sportistu", "GREŠKA", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 if (prezime.isEmpty()) {
                     JOptionPane.showMessageDialog(dsf, "Prezime ne sme biti prazno!", "GREŠKA", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(dsf, "Sistem ne može da zapamti sportistu", "GREŠKA", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 if (selektovanoMesto == null) {
                     JOptionPane.showMessageDialog(dsf, "Morate odabrati mesto!", "GREŠKA", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(dsf, "Sistem ne može da zapamti sportistu", "GREŠKA", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 try {

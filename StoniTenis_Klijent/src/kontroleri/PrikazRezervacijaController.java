@@ -163,11 +163,12 @@ public class PrikazRezervacijaController {
     private void izmeni() {
         int red = prf.getjTableRezervacije().getSelectedRow();
         if (red == -1) {
-            JOptionPane.showMessageDialog(prf, "Morate odabrati rezervaciju!", "GREŠKA", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(prf, "Sistem ne može da nađe rezervaciju", "GREŠKA", JOptionPane.ERROR_MESSAGE);
             return;
         }
         ModelTabeleRezervacija model = (ModelTabeleRezervacija) prf.getjTableRezervacije().getModel();
         Rezervacija r = model.getRezervacija(red);
+        JOptionPane.showMessageDialog(prf, "Sistem je našao rezervaciju", "USPEH", JOptionPane.INFORMATION_MESSAGE);
         Koordinator.getInstance().otvoriIzmenuRezervacije(r);
         prf.dispose();
     }

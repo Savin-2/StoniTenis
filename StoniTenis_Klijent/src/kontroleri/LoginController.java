@@ -43,15 +43,17 @@ public class LoginController {
                 if (ulogovani == null) {
 
                     JOptionPane.showMessageDialog(lf, "Korisničko ime i šifra nisu ispravni", "Greška", JOptionPane.ERROR_MESSAGE);
-
                 } else {
                     koordinator.Koordinator.getInstance().setUlogovani(ulogovani);
                     JOptionPane.showMessageDialog(lf, "Korisničko ime i šifra su ispravni", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
-                    try{
-                    koordinator.Koordinator.getInstance().otvoriGlavnuFormu();
-                    lf.dispose();
-                    }catch(Exception ex){
+
+                    try {
+                        koordinator.Koordinator.getInstance().otvoriGlavnuFormu();
+                        lf.dispose();
+                    } catch (Exception ex) {
                         JOptionPane.showMessageDialog(lf, "Ne može da se otvori glavna forma i meni", "Greška", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(lf, "Ne može da se otvori glavna forma i meni", "Greška", JOptionPane.ERROR_MESSAGE);
+
                     }
                 }
             }
