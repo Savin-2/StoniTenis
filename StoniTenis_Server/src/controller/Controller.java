@@ -1,28 +1,29 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controller;
 
 import domen.Mesto;
+import domen.Rezervacija;
 import domen.Sportista;
 import domen.TerminDezurstva;
 import domen.Zaposleni;
 import domen.ZaposleniTermin;
 import java.util.List;
-import operacije.sportisti.UcitajSportisteSO;
 import operacije.login.LoginOperacija;
 import operacije.mesto.UcitajMestaSO;
+import operacije.rezervacija.IzmeniRezervacijuSO;
+import operacije.rezervacija.KreirajRezervacijuSO;
+import operacije.rezervacija.PretraziRezervacijuSO;
+import operacije.rezervacija.UcitajRezervacijeSO;
 import operacije.sportisti.DodajSportistuSO;
 import operacije.sportisti.IzmeniSportistuSO;
 import operacije.sportisti.ObrisiSportistuSO;
+import operacije.sportisti.PretraziSportistuSO;
+import operacije.sportisti.UcitajSportisteSO;
+import operacije.sto.UcitajStoloveSO;
 import operacije.terminidezurstva.DodajZaposleniTerminSO;
 import operacije.terminidezurstva.UcitajTermineDezurstavaSO;
+import operacije.terminidezurstva.UcitajZaposleneTermineSO;
+import operacije.zaposleni.UcitajZaposleneSO;
 
-/**
- *
- * @author Savin
- */
 public class Controller {
 
     private static Controller instance;
@@ -31,7 +32,6 @@ public class Controller {
     }
 
     public static Controller getInstance() {
-
         if (instance == null) {
             instance = new Controller();
         }
@@ -41,23 +41,18 @@ public class Controller {
     public Zaposleni login(Zaposleni z) throws Exception {
         LoginOperacija operacija = new LoginOperacija();
         operacija.izvrsi(z, null);
-        System.out.println("KLASA CONTROLLER: " + operacija.getZaposleni());
         return operacija.getZaposleni();
     }
 
     public List<Sportista> ucitajSportiste() throws Exception {
-
         UcitajSportisteSO operacija = new UcitajSportisteSO();
         operacija.izvrsi(null, null);
-        System.out.println("KLASA CONTROLLER :" + operacija.getSportisti());
         return operacija.getSportisti();
     }
 
     public void obrisiSportistu(Sportista s) throws Exception {
-
         ObrisiSportistuSO operacija = new ObrisiSportistuSO();
         operacija.izvrsi(s, null);
-
     }
 
     public List<Mesto> ucitajMesta() throws Exception {
@@ -67,10 +62,8 @@ public class Controller {
     }
 
     public void dodajSportistu(Sportista s) throws Exception {
-
         DodajSportistuSO operacija = new DodajSportistuSO();
         operacija.izvrsi(s, null);
-
     }
 
     public void izmeniSportistu(Sportista s) throws Exception {
@@ -88,6 +81,50 @@ public class Controller {
         DodajZaposleniTerminSO operacija = new DodajZaposleniTerminSO();
         operacija.izvrsi(zt, null);
     }
-    
 
+    public List<ZaposleniTermin> ucitajZaposleneTermine() throws Exception {
+        UcitajZaposleneTermineSO operacija = new UcitajZaposleneTermineSO();
+        operacija.izvrsi(null, null);
+        return operacija.getTermini();
+    }
+
+    public List ucitajStolove() throws Exception {
+        UcitajStoloveSO operacija = new UcitajStoloveSO();
+        operacija.izvrsi(null, null);
+        return operacija.getStolovi();
+    }
+
+    public void kreirajRezervaciju(Rezervacija r) throws Exception {
+        KreirajRezervacijuSO operacija = new KreirajRezervacijuSO();
+        operacija.izvrsi(r, null);
+    }
+
+    public List<Zaposleni> ucitajZaposlene() throws Exception {
+        UcitajZaposleneSO operacija = new UcitajZaposleneSO();
+        operacija.izvrsi(null, null);
+        return operacija.getZaposleni();
+    }
+
+    public List<Rezervacija> ucitajRezervacije() throws Exception {
+        UcitajRezervacijeSO operacija = new UcitajRezervacijeSO();
+        operacija.izvrsi(null, null);
+        return operacija.getRezervacije();
+    }
+
+    public void izmeniRezervaciju(Rezervacija r) throws Exception {
+        IzmeniRezervacijuSO operacija = new IzmeniRezervacijuSO();
+        operacija.izvrsi(r, null);
+    }
+
+    public List<Rezervacija> pretraziRezervaciju(Rezervacija r) throws Exception {
+        PretraziRezervacijuSO operacija = new PretraziRezervacijuSO();
+        operacija.izvrsi(r, null);
+        return operacija.getRezervacije();
+    }
+
+    public List<Sportista> pretraziSportiste(Sportista s) throws Exception {
+        PretraziSportistuSO operacija = new PretraziSportistuSO();
+        operacija.izvrsi(s, null);
+        return operacija.getSportisti();
+    }
 }

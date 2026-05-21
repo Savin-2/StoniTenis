@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package niti;
 
 import controller.Controller;
@@ -18,19 +14,7 @@ import komunikacija.Odgovor;
 import komunikacija.Posiljalac;
 import komunikacija.Primalac;
 import komunikacija.Zahtev;
-import operacije.rezervacija.IzmeniRezervacijuSO;
-import operacije.rezervacija.KreirajRezervacijuSO;
-import operacije.rezervacija.PretraziRezervacijuSO;
-import operacije.rezervacija.UcitajRezervacijeSO;
-import operacije.sportisti.PretraziSportistuSO;
-import operacije.sto.UcitajStoloveSO;
-import operacije.terminidezurstva.UcitajZaposleneTermineSO;
-import operacije.zaposleni.UcitajZaposleneSO;
 
-/**
- *
- * @author Savin
- */
 public class ObradaKlijentskihZahteva extends Thread {
 
     Socket socket;
@@ -46,7 +30,6 @@ public class ObradaKlijentskihZahteva extends Thread {
 
     @Override
     public void run() {
-
         while (!kraj) {
             try {
                 Zahtev zahtev = (Zahtev) primalac.primi();
@@ -55,28 +38,36 @@ public class ObradaKlijentskihZahteva extends Thread {
                     case LOGIN:
                         try {
                             Zaposleni z = (Zaposleni) zahtev.getParametar();
-                            z = controller.Controller.getInstance().login(z);
+                            z = Controller.getInstance().login(z);
                             odgovor.setOdgovor(z);
                         } catch (Exception e) {
                             odgovor.setOdgovor(null);
                         }
                         break;
                     case UCITAJ_SPORTISTE:
-                        List<Sportista> sportisti = Controller.getInstance().ucitajSportiste();
-                        odgovor.setOdgovor(sportisti);
+                        try {
+                            List<Sportista> sportisti = Controller.getInstance().ucitajSportiste();
+                            odgovor.setOdgovor(sportisti);
+                        } catch (Exception e) {
+                            odgovor.setOdgovor(e);
+                        }
                         break;
                     case OBRISI_SPORTISTU:
                         try {
                             Sportista s = (Sportista) zahtev.getParametar();
-                            controller.Controller.getInstance().obrisiSportistu(s);
+                            Controller.getInstance().obrisiSportistu(s);
                             odgovor.setOdgovor(null);
                         } catch (Exception e) {
                             odgovor.setOdgovor(e);
                         }
                         break;
                     case UCITAJ_MESTA:
-                        List<Mesto> mesta = Controller.getInstance().ucitajMesta();
-                        odgovor.setOdgovor(mesta);
+                        try {
+                            List<Mesto> mesta = Controller.getInstance().ucitajMesta();
+                            odgovor.setOdgovor(mesta);
+                        } catch (Exception e) {
+                            odgovor.setOdgovor(e);
+                        }
                         break;
                     case DODAJ_SPORTISTU:
                         try {
@@ -104,7 +95,6 @@ public class ObradaKlijentskihZahteva extends Thread {
                             odgovor.setOdgovor(e);
                         }
                         break;
-
                     case DODAJ_ZAPOSLENI_TERMIN:
                         try {
                             ZaposleniTermin zt = (ZaposleniTermin) zahtev.getParametar();
@@ -116,27 +106,24 @@ public class ObradaKlijentskihZahteva extends Thread {
                         break;
                     case UCITAJ_ZAPOSLENE_TERMINE:
                         try {
-                            UcitajZaposleneTermineSO so = new UcitajZaposleneTermineSO();
-                            so.izvrsi(null, null);
-                            odgovor.setOdgovor(so.getTermini());
+                            List<ZaposleniTermin> termini = Controller.getInstance().ucitajZaposleneTermine();
+                            odgovor.setOdgovor(termini);
                         } catch (Exception e) {
                             odgovor.setOdgovor(e);
                         }
                         break;
                     case UCITAJ_STOLOVE:
                         try {
-                            UcitajStoloveSO so = new UcitajStoloveSO();
-                            so.izvrsi(null, null);
-                            odgovor.setOdgovor(so.getStolovi());
+                            List stolovi = Controller.getInstance().ucitajStolove();
+                            odgovor.setOdgovor(stolovi);
                         } catch (Exception e) {
                             odgovor.setOdgovor(e);
                         }
                         break;
-
                     case KREIRAJ_REZERVACIJU:
                         try {
                             Rezervacija r = (Rezervacija) zahtev.getParametar();
-                            new KreirajRezervacijuSO().izvrsi(r, null);
+                            Controller.getInstance().kreirajRezervaciju(r);
                             odgovor.setOdgovor(null);
                         } catch (Exception e) {
                             odgovor.setOdgovor(e);
@@ -144,19 +131,16 @@ public class ObradaKlijentskihZahteva extends Thread {
                         break;
                     case UCITAJ_ZAPOSLENE:
                         try {
-                            UcitajZaposleneSO so = new UcitajZaposleneSO();
-                            so.izvrsi(null, null);
-                            odgovor.setOdgovor(so.getZaposleni());
+                            List<Zaposleni> zaposleni = Controller.getInstance().ucitajZaposlene();
+                            odgovor.setOdgovor(zaposleni);
                         } catch (Exception e) {
                             odgovor.setOdgovor(e);
                         }
                         break;
-
                     case UCITAJ_REZERVACIJE:
                         try {
-                            UcitajRezervacijeSO so = new UcitajRezervacijeSO();
-                            so.izvrsi(null, null);
-                            odgovor.setOdgovor(so.getRezervacije());
+                            List<Rezervacija> rezervacije = Controller.getInstance().ucitajRezervacije();
+                            odgovor.setOdgovor(rezervacije);
                         } catch (Exception e) {
                             odgovor.setOdgovor(e);
                         }
@@ -164,7 +148,7 @@ public class ObradaKlijentskihZahteva extends Thread {
                     case IZMENI_REZERVACIJU:
                         try {
                             Rezervacija r = (Rezervacija) zahtev.getParametar();
-                            new IzmeniRezervacijuSO().izvrsi(r, null);
+                            Controller.getInstance().izmeniRezervaciju(r);
                             odgovor.setOdgovor(null);
                         } catch (Exception e) {
                             odgovor.setOdgovor(e);
@@ -173,9 +157,8 @@ public class ObradaKlijentskihZahteva extends Thread {
                     case PRETRAZI_REZERVACIJU:
                         try {
                             Rezervacija r = (Rezervacija) zahtev.getParametar();
-                            PretraziRezervacijuSO so = new PretraziRezervacijuSO();
-                            so.izvrsi(r, null);
-                            odgovor.setOdgovor(so.getRezervacije());
+                            List<Rezervacija> rezervacije = Controller.getInstance().pretraziRezervaciju(r);
+                            odgovor.setOdgovor(rezervacije);
                         } catch (Exception e) {
                             odgovor.setOdgovor(e);
                         }
@@ -183,9 +166,8 @@ public class ObradaKlijentskihZahteva extends Thread {
                     case PRETRAZI_SPORTISTU:
                         try {
                             Sportista s = (Sportista) zahtev.getParametar();
-                            PretraziSportistuSO so = new PretraziSportistuSO();
-                            so.izvrsi(s, null);
-                            odgovor.setOdgovor(so.getSportisti());
+                            List<Sportista> sportisti = Controller.getInstance().pretraziSportiste(s);
+                            odgovor.setOdgovor(sportisti);
                         } catch (Exception e) {
                             odgovor.setOdgovor(e);
                         }
@@ -201,10 +183,8 @@ public class ObradaKlijentskihZahteva extends Thread {
     }
 
     public void prekini() throws IOException {
-
         kraj = true;
         socket.close();
         interrupt();
     }
-
 }
